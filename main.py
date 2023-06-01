@@ -15,8 +15,7 @@ if __name__ == "__main__":
                     print("Contact '" + name + "' added")
 
                 elif (sys.argv[1] == "-l"):
-                    contacts = pd.read_sql_query("SELECT * FROM contacts", db.connection)
-                    print(contacts)
+                    db.get_contacts()
 
             elif(len(sys.argv) == 3):
                 if (sys.argv[1] == "-d"):
@@ -26,6 +25,8 @@ if __name__ == "__main__":
                     email = input("Enter email: ")
                     phone = input("Enter phone: ")
                     db.update_contact(sys.argv[2], name, phone, email)
+                elif (sys.argv[1] == "-sn"):
+                    db.search_by_name(sys.argv[2])
             else:
                 print("Error: Expected 1 or 2 arguments but got " + str(len(sys)))
 

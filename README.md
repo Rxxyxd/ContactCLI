@@ -9,3 +9,4 @@ This was created as a learning project for pandas and sqlite3 libraries in pytho
  - `$ py main.py -d <id>` - deletes a contact from the database by ID
  - `$ py main.py -add` - adds a contact to the database
  - `$ py main.py -u <id>` - updates a contact in the database by ID
+ - `$ py main.py -sn <name>` - search for contact by name
