@@ -1,4 +1,4 @@
-from db import Database
+from contacts import Database
 import sys
 import pandas as pd
 
