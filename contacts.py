@@ -1,4 +1,5 @@
 import sqlite3
+import re
 import pandas as pd
 
 class Database:
@@ -15,7 +16,7 @@ class Database:
             self.cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT,
-                phone TEXT,
+                phone INTEGER,
                 email TEXT,
                 unique(phone, email)
                 ); ''')
@@ -76,3 +77,10 @@ class Database:
 
     def close_connection(self):
         self.connection.close()
+
+def emailIsValid(email):
+    regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+') 
+    if re.fullmatch(regex, email):
+        return True
+    else:
+        return False

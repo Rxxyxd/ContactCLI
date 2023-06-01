@@ -1,4 +1,4 @@
-from contacts import Database
+from contacts import Database, emailIsValid
 import sys
 
 db = Database()
@@ -10,8 +10,11 @@ if __name__ == "__main__":
                     name = input("Enter name: ")
                     email = input("Enter email: ")
                     phone = input("Enter phone: ")
-                    db.add_contact(name, phone, email)
-                    print("Contact '" + name + "' added")
+                    if emailIsValid(email):
+                        db.add_contact(name, phone, email)
+                        print("Contact '" + name + "' added")
+                    else:
+                        print("Error: Invalid email")
 
                 elif (sys.argv[1] == "-l"):
                     db.get_contacts()
@@ -26,7 +29,10 @@ if __name__ == "__main__":
                     name = input("Enter name: ")
                     email = input("Enter email: ")
                     phone = input("Enter phone: ")
-                    db.update_contact(sys.argv[2], name, phone, email)
+                    if emailIsValid(email):
+                        db.update_contact(sys.argv[2], name, phone, email)
+                    else:
+                        print("Error: Invalid email")
                 elif (sys.argv[1] == "-sn"):
                     db.search_by_name(sys.argv[2])
                 else:
