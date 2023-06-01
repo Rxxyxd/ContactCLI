@@ -39,17 +39,28 @@ class Database:
     
     def delete_contact(self, id):
         try:
-            self.cursor.execute('DELETE FROM contacts WHERE id = ?', (id,))
-            self.connection.commit()
-        except:
+            r = self.cursor.execute('SELECT EXISTS(SELECT * FROM contacts WHERE id = ?)', (id,))
+            id_exists = list(r.fetchone())
+            if id_exists[0] == 1:
+                self.cursor.execute('DELETE FROM contacts WHERE id = ?', (id,))
+                self.connection.commit()
+                print("SUCCESS: Contact deleted")
+            else:
+                print("Error: Contact does not exist")
+        except ValueError:
             print("Error: Unable to delete contact")
 
     def update_contact(self, id, name, phone, email):
         try:
-            self.cursor.execute('UPDATE contacts SET name = ?, phone = ?, email = ? WHERE id = ?', (name, phone, email, id))
-            self.connection.commit()
+            r = self.cursor.execute('SELECT EXISTS(SELECT * FROM contacts WHERE id = ?)', (id,))
+            id_exists = list(r.fetchone())
+            if id_exists[0] == 1:
+                self.cursor.execute('UPDATE contacts SET name = ?, phone = ?, email = ? WHERE id = ?', (name, phone, email, id,))
+                self.connection.commit()
+            else:
+                print("Error: Contact does not exist")
         except:
-            print("Error: Unable to update contact")
+            print("Error: Unable to update contact or id does not exist")
 
     def close_connection(self):
         self.connection.close()
