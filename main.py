@@ -1,6 +1,5 @@
 from contacts import Database
 import sys
-import pandas as pd
 
 db = Database()
 if __name__ == "__main__":
@@ -28,8 +27,9 @@ if __name__ == "__main__":
                 elif (sys.argv[1] == "-sn"):
                     db.search_by_name(sys.argv[2])
             else:
-                print("Error: Expected 1 or 2 arguments but got " + str(len(sys)))
+                print("Error: Expected 2 or 3 arguments but got " + str(len(sys.argv)))
 
         except IndexError:
             print("Error: Expected 1 or 2 arguments but got " + str(len(sys.argv)) + " arguments")
+
         db.close_connection()
