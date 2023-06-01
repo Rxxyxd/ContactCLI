@@ -1,6 +1,7 @@
 import sqlite3
+import pandas as pd
 
-class Database():
+class Database:
     def __init__(self):
         try:
             self.connection = sqlite3.connect('contacts.db')
@@ -29,13 +30,12 @@ class Database():
         except sqlite3.IntegrityError:
             print("Error: Contact already exists")
     
-    def get_contacts(self):
-        try:
-            self.cursor.execute('SELECT * FROM contacts')
-            contacts = self.cursor.fetchall()
-            return contacts
-        except:
-            print("No contacts found")
+#    def get_contacts(self):
+#        try:
+#            contacts = pd.read_sql_query('SELECT * FROM contacts', self.connection)
+#            return contacts
+#        except:
+#            print("No contacts found")
     
     def delete_contact(self, id):
         try:

@@ -1,20 +1,21 @@
-import db
+from db import Database
 import sys
+import pandas as pd
 
-database = db.Database()
-
+db = Database()
 if __name__ == "__main__":
-        database.create_table()
+        db.create_table()
         try:
             if (sys.argv[1] == "-d"):
-                database.delete_contact(sys.argv[2])
-            elif (sys.argv[1] == "add"):
+                db.delete_contact(sys.argv[2])
+            elif (sys.argv[1] == "-add"):
                 name = input("Enter name: ")
                 email = input("Enter email: ")
                 phone = input("Enter phone: ")
-                database.add_contact(name, phone, email)
+                db.add_contact(name, phone, email)
             elif (sys.argv[1] == "-a"):
-                print(database.get_contacts())
+                contacts = pd.read_sql_query("SELECT * FROM contacts", db.connection)
+                print(contacts)
             else:
                 print("Error: Invalid arguement(s)")
         except IndexError:
