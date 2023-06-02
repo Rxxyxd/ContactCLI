@@ -45,8 +45,5 @@ if __name__ == "__main__":
         
         except ValueError:
             print("Error: Phone number must be an integer")
-        
-        #else:
-        #    print("Error: unknown error")
 
         db.close_connection()
