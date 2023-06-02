@@ -9,7 +9,7 @@ if __name__ == "__main__":
                 if (sys.argv[1] == "-add"):
                     name = input("Enter name: ")
                     email = input("Enter email: ")
-                    phone = input("Enter phone: ")
+                    phone = int(input("Enter phone: "))
                     if emailIsValid(email):
                         db.add_contact(name, phone, email)
                         print("Contact '" + name + "' added")
@@ -42,5 +42,11 @@ if __name__ == "__main__":
 
         except IndexError:
             print("Error: Expected 1 or 2 arguments but got " + str(len(sys.argv)) + " arguments")
+        
+        except ValueError:
+            print("Error: Phone number must be an integer")
+        
+        #else:
+        #    print("Error: unknown error")
 
         db.close_connection()
