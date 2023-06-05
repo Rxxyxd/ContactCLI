@@ -28,8 +28,13 @@ class Database:
         try:
             self.cursor.execute('INSERT INTO contacts (name, phone, email) VALUES (?, ?, ?)', (name, phone, email))
             self.connection.commit()
+        
         except sqlite3.IntegrityError:
             print("Error: Contact already exists")
+        
+        except sqlite3.OperationalError:
+            print("Try running - `py main.py -c`")
+            print("If this error persists, create an issue on the GitHub repository.")
     
     def get_contacts(self):
         try:
@@ -50,6 +55,9 @@ class Database:
                 print("Error: Contact does not exist")
         except ValueError:
             print("Error: Unable to delete contact")
+        except sqlite3.OperationalError:
+            print("Try running - `py main.py -c`")
+            print("If this error persists, create an issue on the GitHub repository.")
 
     def update_contact(self, id, name, phone, email):
         try:
@@ -60,9 +68,10 @@ class Database:
                 self.connection.commit()
             else:
                 print("Error: Contact does not exist")
-        except:
-            print("Error: Unable to update contact or id does not exist")
-    
+        except sqlite3.OperationalError:
+            print("Try running - `py main.py -c`")
+            print("If this error persists, create an issue on the GitHub repository.")
+            
     def search_by_name(self, name):
         try:
             r = self.cursor.execute('SELECT * FROM contacts WHERE name = ?', (name,))
