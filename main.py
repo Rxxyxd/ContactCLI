@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     # update arg parser
     parser_update = subparsers.add_parser("update", help="Update an existing contact")
-    parser_update.add_argument("--ID", required=True, type=int, help="ID of contact")
+    parser_update.add_argument("--id", required=True, type=int, help="ID of contact")
     parser_update.add_argument("--name", required=True, help="Name of contact")
     parser_update.add_argument("--email", required=True, help="Email of contact")
     parser_update.add_argument("--phone", required=True, type=int, help="Phone of contact")
@@ -52,11 +52,11 @@ if __name__ == '__main__':
             print("Invalid email")
 
     elif args.mode == "delete":
-        db.delete_contact(args.ID)
+        db.delete_contact(args.id)
 
     elif args.mode == "update":
         if emailIsValid(args.email):
-            db.update_contact(args.ID, args.name, args.phone, args.email)
+            db.update_contact(args.id, args.name, args.phone, args.email)
         else:
             print("Invalid email")
     
