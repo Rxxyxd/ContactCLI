@@ -4,25 +4,18 @@ import pandas as pd
 
 class Database:
     def __init__(self):
-        try:
-            self.connection = sqlite3.connect('contacts.db')
-            self.cursor = self.connection.cursor()
-        
-        except:
-            print("Error: Unable to connect to database")
+        self.connection = sqlite3.connect('contacts.db')
+        self.cursor = self.connection.cursor()
 
     def create_table(self):
-        try:
-            self.cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT,
-                phone INTEGER,
-                email TEXT,
-                unique(phone, email)
-                ); ''')
-            self.connection.commit()
-        except:
-            print("Error: Unable to create table")
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS contacts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            phone INTEGER,
+            email TEXT,
+            unique(phone, email)
+            ); ''')
+        self.connection.commit()
     
     def add_contact(self, name, phone, email):
         try:
@@ -37,11 +30,8 @@ class Database:
             print("If this error persists, create an issue on the GitHub repository.")
     
     def get_contacts(self):
-        try:
-            contacts = pd.read_sql_query('SELECT * FROM contacts', self.connection)
-            print(contacts)
-        except:
-            print("No contacts found")
+        contacts = pd.read_sql_query('SELECT * FROM contacts', self.connection)
+        print(contacts)
     
     def delete_contact(self, id):
         try:
@@ -71,7 +61,7 @@ class Database:
         except sqlite3.OperationalError:
             print("Try running - `py main.py -c`")
             print("If this error persists, create an issue on the GitHub repository.")
-            
+
     def search_by_name(self, name):
         try:
             r = self.cursor.execute('SELECT * FROM contacts WHERE name = ?', (name,))
@@ -81,8 +71,8 @@ class Database:
                 print(contacts)
             else:
                 print("Error: Contact does not exist")
-        except:
-            print("Error: No contacts found")
+        except TypeError:
+            print("Error: Contact does not exist")
 
     def close_connection(self):
         self.connection.close()
